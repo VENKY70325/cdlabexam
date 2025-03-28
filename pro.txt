@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <omp.h>
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5, 6, 7, 8};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int prefix_sum;
+    int i;
+
+    prefix_sum[0] = arr[0];
+
+    #pragma omp parallel for
+    for (i = 1; i < n; i++) {
+        prefix_sum[i] = prefix_sum[i - 1] + arr[i];
+    }
+
+    printf("Input array: ");
+    for (i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    printf("Parallel Prefix Sum: ");
+    for (i = 0; i < n; i++) {
+        printf("%d ", prefix_sum[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
